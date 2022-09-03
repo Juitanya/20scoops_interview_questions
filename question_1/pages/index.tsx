@@ -1,9 +1,11 @@
 import type { NextPage } from "next";
 import Link from "next/link";
 import { useState } from "react";
-import styles from "../styles/Home.module.css";
 import Button from "./components/Button/Button";
 import Input from "./components/Input/Input";
+import { REGEX } from "./constant";
+import { useAuth } from "./context/useAuth";
+import { validateByRegex } from "./utils";
 
 interface FormData {
 	email: { value: string };
@@ -11,20 +13,41 @@ interface FormData {
 }
 
 const Home: NextPage = () => {
-	const [loggedIn, setLoggedIn] = useState(false);
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState("");
+	const { authUser, authLoading, signIn, signOut } = useAuth();
 
-	const handleSignIn = (e: React.SyntheticEvent) => {
+	const handleSignIn = async (e: React.SyntheticEvent) => {
 		e.preventDefault();
+
 		const target = e.target as typeof e.target & FormData;
 		const email = target.email.value;
 		const password = target.password.value;
-		console.log(email, password);
-		setLoggedIn(true);
+		if (!validateByRegex(email, REGEX.EMAIL)) return false;
+
+		try {
+			setLoading(true);
+			await signIn(email, password);
+		} catch (error) {
+			setError("Incorrect username or password.");
+		}
+		setError("");
+		setLoading(false);
 	};
-	const handleSignOut = () => {
-		setLoggedIn(false);
+	const handleSignOut = async () => {
+		try {
+			setLoading(true);
+			await signOut();
+		} catch (error) {
+			setError("Something went wrong while signing out.");
+		}
+		setError("");
+		setLoading(false);
 	};
-	return !loggedIn ? (
+
+	return authLoading ? (
+		<div></div>
+	) : !authUser ? (
 		<div
 			style={{
 				display: "flex",
@@ -60,12 +83,13 @@ const Home: NextPage = () => {
 					required
 					placeholder="Enter your password"
 				/>
-				<Button type="submit" text="Login" />
+				<Button type="submit" text="Login" loading={loading} />
 			</form>
 
 			<Link href="/register">
 				<Button text="Register" />
 			</Link>
+			{error ? <div style={{ color: "red" }}>{error}</div> : ""}
 		</div>
 	) : (
 		<div>
@@ -77,7 +101,12 @@ const Home: NextPage = () => {
 			<p>Email : $email</p>
 			<p>Telephone Number : $tel</p>
 			<p>Accepted Terms : Checked !</p>
-			<Button onClick={() => handleSignOut()} text="LOGOUT" />
+			<Button
+				onClick={() => handleSignOut()}
+				text="LOGOUT"
+				loading={loading}
+			/>
+			{error ? <div style={{ color: "red" }}>{error}</div> : ""}
 		</div>
 	);
 };
