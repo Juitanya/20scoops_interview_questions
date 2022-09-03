@@ -1,10 +1,11 @@
 import type { NextPage } from "next";
 import Link from "next/link";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "./components/Button/Button";
 import Input from "./components/Input/Input";
 import { REGEX } from "./constant";
 import { useAuth } from "./context/useAuth";
+import { fetchData } from "./firebase/database";
 import { validateByRegex } from "./utils";
 
 interface FormData {
@@ -12,10 +13,31 @@ interface FormData {
 	password: { value: string };
 }
 
+interface UserInformation {
+	gender: string;
+	firstName: string;
+	lastName: string;
+	address: string;
+	postCode: string;
+	email: string;
+	tel: string;
+}
+
 const Home: NextPage = () => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState("");
 	const { authUser, authLoading, signIn, signOut } = useAuth();
+	const [userData, setUserData] = useState({});
+
+	useEffect(() => {
+		const fetchUserData = async () => {
+			setLoading(true);
+			const data = await fetchData((authUser as any).email);
+			setUserData(data[0]);
+			setLoading(false);
+		};
+		if (authUser) fetchUserData().catch(console.error);
+	}, [authUser]);
 
 	const handleSignIn = async (e: React.SyntheticEvent) => {
 		e.preventDefault();
@@ -28,10 +50,12 @@ const Home: NextPage = () => {
 		try {
 			setLoading(true);
 			await signIn(email, password);
+			setError("");
 		} catch (error) {
+			console.log(error);
 			setError("Incorrect username or password.");
 		}
-		setError("");
+
 		setLoading(false);
 	};
 	const handleSignOut = async () => {
@@ -44,7 +68,8 @@ const Home: NextPage = () => {
 		setError("");
 		setLoading(false);
 	};
-
+	const { gender, firstName, lastName, address, postCode, email, tel }: any =
+		userData;
 	return authLoading ? (
 		<div></div>
 	) : !authUser ? (
@@ -93,19 +118,26 @@ const Home: NextPage = () => {
 		</div>
 	) : (
 		<div>
-			<p>Gender : $gender</p>
-			<p>First Name : $firstName </p>
-			<p>Last Name : $ lastName</p>
-			<p>Address : $address</p>
-			<p>Post Code : $postCode</p>
-			<p>Email : $email</p>
-			<p>Telephone Number : $tel</p>
-			<p>Accepted Terms : Checked !</p>
+			{loading ? (
+				""
+			) : (
+				<React.Fragment>
+					<p>Gender : {gender}</p>
+					<p>First Name : {firstName} </p>
+					<p>Last Name : {lastName}</p>
+					<p>Address : {address}</p>
+					<p>Post Code : {postCode}</p>
+					<p>Email : {email}</p>
+					<p>Telephone Number : {tel}</p>
+				</React.Fragment>
+			)}
+
 			<Button
 				onClick={() => handleSignOut()}
 				text="LOGOUT"
 				loading={loading}
 			/>
+
 			{error ? <div style={{ color: "red" }}>{error}</div> : ""}
 		</div>
 	);

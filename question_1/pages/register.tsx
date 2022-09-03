@@ -7,6 +7,7 @@ import Input from "./components/Input/Input";
 import Label from "./components/Label/Label";
 import { REGEX } from "./constant";
 import { useAuth } from "./context/useAuth";
+import { writeData } from "./firebase/database";
 import { validateByRegex } from "./utils";
 
 interface RegisterDataType {
@@ -49,11 +50,25 @@ const Register: NextPage = () => {
 		try {
 			setLoading(true);
 			await registerByEmailAndPassword(email, tel);
+
+			const data = {
+				gender,
+				firstName,
+				lastName,
+				address,
+				postCode,
+				email,
+				tel,
+			};
+
+			await writeData(data);
+
 			console.log(
 				`Gender : ${gender}\nFirst Name : ${firstName}\nLast Name : ${lastName}\nAddress : ${address}\nPost Code : ${postCode}\nEmail : ${email}\nTelephone Number : ${tel}\nAccepted Terms : Checked !`
 			);
 			router.push("/");
 		} catch (error: any) {
+			console.log("err", error);
 			if (error.code === "auth/email-already-in-use")
 				setError("The email has already been used.");
 			else setError("Something went wrong, Please try again later.");
