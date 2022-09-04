@@ -10,6 +10,7 @@ import { useAuth } from "./context/useAuth";
 import { writeData } from "./firebase/database";
 import { validateByRegex } from "./utils";
 import styles from "../styles/Register.module.css";
+import Select from "./components/Select/Select";
 
 interface RegisterDataType {
 	gender: { value: string };
@@ -86,12 +87,19 @@ const Register: NextPage = () => {
 					className={styles.formContainer}
 				>
 					<Label text="Gender: " required />
-					<select name="gender" id="gender" required defaultValue="">
-						<option disabled value="" hidden></option>
-						<option value="Male">Male</option>
-						<option value="Female">Female</option>
-						<option value="Other">Other</option>
-					</select>
+					<Select
+						option={[
+							{ value: "", disabled: true, hidden: true },
+							{ value: "Male" },
+							{ value: "Female" },
+							{ value: "Other" },
+						]}
+						required
+						defaultValue=""
+						id="gender"
+						name="gender"
+					/>
+
 					<Label text="First name: " required />
 					<Input
 						type="text"

@@ -1,10 +1,36 @@
 .button {
-    min-height: 1.75rem;
-    background: none;
-    border:solid 1px gray;
+    min-height: 2.5rem;
+    min-width: 7rem;
+    border: solid rgb(214, 46, 46);
     border-radius: 0.25rem;
     cursor: pointer;
     font-family: Poppins;
+    transition: 0.5s;
+    color:white;
+    background-color: rgb(214, 46, 46);
+    font-size: 1.1em;
+}
+
+.button:hover {
+    opacity:0.6;
+}
+
+.buttonSecondary {
+    min-height: 2.5rem;
+    min-width: 7rem;
+    border: solid gray;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-family: Poppins;
+    transition: 0.5s;
+    color:white;
+    background-color: gray;
+    font-size: 1.1em;
+}
+
+
+.buttonSecondary:hover {
+    opacity:0.6;
 }
 
 .loading {

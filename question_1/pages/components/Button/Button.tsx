@@ -8,6 +8,7 @@ interface ButtonProps {
 	type?: "button" | "submit" | "reset";
 	text?: string;
 	littleMarginTop?: boolean;
+	secondary?: boolean;
 }
 const Button: FC<ButtonProps> = ({
 	loading,
@@ -15,14 +16,21 @@ const Button: FC<ButtonProps> = ({
 	onClick,
 	text,
 	type,
+	secondary,
 }): JSX.Element => {
 	return (
 		<button
-			className={loading ? styles.loading : styles.button}
+			className={
+				loading
+					? styles.loading
+					: secondary
+					? styles.buttonSecondary
+					: styles.button
+			}
 			type={type}
 			onClick={onClick}
 			disabled={loading}
-			style={{ marginTop: littleMarginTop ? "0.25rem" : "" }}
+			style={{ marginTop: littleMarginTop ? "1rem" : "" }}
 		>
 			{loading ? <Loader /> : text}
 		</button>

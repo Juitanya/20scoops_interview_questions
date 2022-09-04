@@ -9,6 +9,7 @@ import { fetchData } from "./firebase/database";
 import { validateByRegex } from "./utils";
 import styles from "../styles/Home.module.css";
 import Information from "./components/Information/Information";
+import Loader from "./components/Loader/Loader";
 
 interface FormData {
 	email: { value: string };
@@ -42,9 +43,9 @@ const Home: NextPage = () => {
 	useEffect(() => {
 		const fetchUserData = async () => {
 			setLoading(true);
-			console.log("authUser", authUser);
+
 			const data = await fetchData((authUser as any).email);
-			console.log("data", data);
+
 			setUserData(data[0]);
 			setLoading(false);
 		};
@@ -80,14 +81,13 @@ const Home: NextPage = () => {
 		setError("");
 		setLoading(false);
 	};
-	console.log("userData", userData);
 	const { gender, firstName, lastName, address, postCode, email, tel }: any =
 		userData;
 
 	return (
 		<div className={styles.container}>
 			{authLoading ? (
-				<div></div>
+				<Loader />
 			) : !authUser ? (
 				<div className={styles.contentContainer}>
 					<form
@@ -125,7 +125,7 @@ const Home: NextPage = () => {
 					</form>
 
 					<Link href="/register">
-						<Button text="Register" />
+						<Button text="Register" secondary />
 					</Link>
 					{error ? <div style={{ color: "red" }}>{error}</div> : ""}
 				</div>
@@ -149,6 +149,7 @@ const Home: NextPage = () => {
 						onClick={() => handleSignOut()}
 						text="LOGOUT"
 						loading={loading}
+						littleMarginTop
 					/>
 
 					{error ? <div style={{ color: "red" }}>{error}</div> : ""}
