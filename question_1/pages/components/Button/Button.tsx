@@ -30,7 +30,7 @@ const Button: FC<ButtonProps> = ({
 			type={type}
 			onClick={onClick}
 			disabled={loading}
-			style={{ marginTop: littleMarginTop ? "1rem" : "" }}
+			style={{ marginTop: littleMarginTop ? "1rem" : "0rem" }}
 		>
 			{loading ? <Loader /> : text}
 		</button>
