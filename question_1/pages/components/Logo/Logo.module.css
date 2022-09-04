@@ -1,0 +1,30 @@
+.logo {
+    width: 20rem;
+    position: absolute;
+    right: 3rem;
+    top: 3rem;
+}
+
+@media (max-width: 1450px) {
+    .logo{
+        width: 10rem;
+        right: 2rem;
+        top: 2rem;
+    }
+}
+
+@media (max-width: 1050px) {
+    .logo{
+        top: 0.5rem;
+        right: 1rem;
+    }
+}
+
+@media (max-width: 530px) {
+    .logo{
+        top: 0rem;
+        right: 0.5rem;
+    }
+}
+
+

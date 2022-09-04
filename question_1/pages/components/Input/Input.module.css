@@ -1,0 +1,66 @@
+.container {
+    display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.contentContainer {
+    display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 1rem;
+	position: relative;
+}
+.input {
+    min-height: 1.75rem;
+    font-size: 1em;
+    border-radius: 0.25rem;
+    border:solid 1px gray;
+    min-width: 16rem;
+    padding: 0.5rem ;
+    font-family: Poppins;
+}
+
+.passwordInput {
+    min-height: 1.75rem;
+    font-size: 1em;
+    border-radius: 0.25rem;
+    border:solid 1px gray;
+    min-width: 14rem;
+    padding: 0.5rem 3rem 0.5rem 0.5rem;
+    font-family: Poppins;
+}
+
+.checkboxInput {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 0.25rem;
+    border:solid 1px gray;
+    padding: 0.5rem;
+    cursor: pointer;
+}
+
+.error {
+    color: rgb(214, 46, 46); 
+    margin-top: 0.25rem;
+}
+
+.telInput {
+    min-height: 1.75rem;
+    font-size: 1em;
+    border-radius: 0.25rem;
+    border:solid 1px gray;
+    min-width: 16rem;
+    padding: 0.5rem ;
+    font-family: Poppins;
+    margin-right: 3rem;
+}
+
+.imgPassword {
+    width: 2rem;
+	cursor: pointer;
+	position: absolute;
+	right: 10px;
+	opacity: 0.5;
+}
