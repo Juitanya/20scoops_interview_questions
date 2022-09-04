@@ -11,6 +11,7 @@ import { writeData } from "./firebase/database";
 import { validateByRegex } from "./utils";
 import styles from "../styles/Register.module.css";
 import Select from "./components/Select/Select";
+import Header from "./components/Header/Header";
 
 interface RegisterDataType {
 	gender: { value: string };
@@ -27,7 +28,7 @@ const Register: NextPage = () => {
 	const [error, setError] = useState("");
 	const [loading, setLoading] = useState(false);
 	const router = useRouter();
-	const { registerByEmailAndPassword, signOut } = useAuth();
+	const { registerByEmailAndPassword } = useAuth();
 
 	const handleRegister = async (e: React.SyntheticEvent) => {
 		e.preventDefault();
@@ -70,9 +71,10 @@ const Register: NextPage = () => {
 			);
 			router.push("/");
 		} catch (error: any) {
-			console.log("err", error);
 			if (error.code === "auth/email-already-in-use")
 				setError("The email has already been used.");
+			else if (error.code === "auth/weak-password")
+				setError("Password should be at least 6 characters.");
 			else setError("Something went wrong, Please try again later.");
 		}
 		setLoading(false);
@@ -80,8 +82,8 @@ const Register: NextPage = () => {
 	return (
 		<div className={styles.container}>
 			<div className={styles.contentContainer}>
+				<Header text="CREATE ACCOUNT" />
 				<form
-					autoComplete="off"
 					onSubmit={(e) => handleRegister(e)}
 					id="registerform"
 					className={styles.formContainer}
@@ -142,22 +144,25 @@ const Register: NextPage = () => {
 						name="tel"
 						placeholder="Enter your telephone number"
 						required
+						min={9}
 						max={10}
 					/>
 
 					<div className={styles.checkBoxContainer}>
 						<Input required type="checkbox" name="acceptedTerms" />
 						<p style={{ paddingLeft: "1rem" }}>
-							I have read and agree to the website terms and
-							conditions
+							I have read and agree to the website
 						</p>
+						<div className={styles.redirect}>
+							<Link href="">&nbsp;terms and conditions</Link>
+						</div>
 					</div>
 					<Button type="submit" text="Register" loading={loading} />
 				</form>
 				{error ? <div className={styles.error}>{error}</div> : ""}
-				<div className={styles.goToSignInPage}>
+				<div className={styles.redirect} style={{ marginTop: "1rem" }}>
 					<Link href="/">
-						Already have account ? Go to sign in page.
+						Already have an account ? Go to sign in page.
 					</Link>
 				</div>
 			</div>

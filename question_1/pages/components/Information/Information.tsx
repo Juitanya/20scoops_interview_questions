@@ -8,7 +8,7 @@ interface InformationProps {
 const Information: FC<InformationProps> = ({ info, topic }): JSX.Element => {
 	return (
 		<div className={styles.container}>
-			<p style={{ fontWeight: 700 }}>{topic}:</p>
+			<p className={styles.bold}>{topic}:</p>
 			<p>{info}</p>
 		</div>
 	);

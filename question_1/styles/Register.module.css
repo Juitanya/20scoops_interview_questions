@@ -1,12 +1,12 @@
 .container {
     background-color : white;
-    border: solid 2px;
     display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	gap: 0.5rem;
     min-height: 100vh;
+	
     height:100%;
     background-color : rgb(214, 46, 46);
     padding: 2rem;
@@ -18,7 +18,6 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	gap: 0.5rem;
     max-width:100%;
     overflow: hidden;
     padding: 2rem;
@@ -40,15 +39,20 @@
 }
 
 .error {
-    color: red;
+    color: rgb(214, 46, 46);
 	display: flex;
 	justify-content: center;
 	margin-top: 1rem;
 }
 
-.goToSignInPage {
+.redirect {
     display: flex;
 	justify-content: center;
-	margin-top: 1rem;
 	color: #3498db;
+	opacity:0.85;
+	transition:0.25s;
+}
+
+.redirect:hover{
+	opacity:1;
 }

@@ -11,6 +11,7 @@ interface InputProps {
 	required?: boolean;
 	placeholder?: string;
 	max?: number;
+	min?: number;
 }
 const Input: FC<InputProps> = ({
 	type,
@@ -18,28 +19,14 @@ const Input: FC<InputProps> = ({
 	required,
 	placeholder,
 	max,
+	min,
 }): JSX.Element => {
 	const [hidePassword, setHidePassword] = useState(true);
 	const [error, setError] = useState("");
 
 	return (
-		<div
-			style={{
-				display: "flex",
-				flexDirection: "column",
-				justifyContent: "center",
-				alignItems: "center",
-			}}
-		>
-			<div
-				style={{
-					display: "flex",
-					alignItems: "center",
-					justifyContent: "center",
-					gap: "1rem",
-					position: "relative",
-				}}
-			>
+		<div className={styles.container}>
+			<div className={styles.contentContainer}>
 				{name === "tel" ? (
 					<div
 						style={{
@@ -63,6 +50,7 @@ const Input: FC<InputProps> = ({
 					required={required}
 					placeholder={placeholder}
 					maxLength={max}
+					minLength={min}
 					className={
 						type === "password"
 							? styles.passwordInput
@@ -118,13 +106,7 @@ const Input: FC<InputProps> = ({
 				{type === "password" ? (
 					<img
 						src={hidePassword ? eyeSlash.src : eye.src}
-						style={{
-							width: "2rem",
-							cursor: "pointer",
-							position: "absolute",
-							right: "10px",
-							opacity: "0.5",
-						}}
+						className={styles.imgPassword}
 						onClick={() => {
 							setHidePassword(!hidePassword);
 						}}

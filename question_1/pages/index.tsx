@@ -10,6 +10,7 @@ import { validateByRegex } from "./utils";
 import styles from "../styles/Home.module.css";
 import Information from "./components/Information/Information";
 import Loader from "./components/Loader/Loader";
+import Header from "./components/Header/Header";
 
 interface FormData {
 	email: { value: string };
@@ -65,7 +66,6 @@ const Home: NextPage = () => {
 			await signIn(email, password);
 			setError("");
 		} catch (error) {
-			console.log(error);
 			setError("Incorrect username or password.");
 		}
 
@@ -90,8 +90,8 @@ const Home: NextPage = () => {
 				<Loader />
 			) : !authUser ? (
 				<div className={styles.contentContainer}>
+					<Header text="Sign In" />
 					<form
-						autoComplete="off"
 						onSubmit={(e) => handleSignIn(e)}
 						id="loginform"
 						style={{
@@ -127,10 +127,15 @@ const Home: NextPage = () => {
 					<Link href="/register">
 						<Button text="Register" secondary />
 					</Link>
-					{error ? <div style={{ color: "red" }}>{error}</div> : ""}
+					{error ? (
+						<div className={styles.textErrorColor}>{error}</div>
+					) : (
+						""
+					)}
 				</div>
 			) : (
 				<div className={styles.informationContainer}>
+					<Header text="User Information" />
 					{loading ? (
 						""
 					) : (
@@ -141,7 +146,10 @@ const Home: NextPage = () => {
 							<Information topic="Address" info={address} />
 							<Information topic="Post Code" info={postCode} />
 							<Information topic="Email" info={email} />
-							<Information topic="Telephone Number" info={tel} />
+							<Information
+								topic="Telephone Number (+66)"
+								info={tel}
+							/>
 						</React.Fragment>
 					)}
 
@@ -152,7 +160,11 @@ const Home: NextPage = () => {
 						littleMarginTop
 					/>
 
-					{error ? <div style={{ color: "red" }}>{error}</div> : ""}
+					{error ? (
+						<div className={styles.textErrorColor}>{error}</div>
+					) : (
+						""
+					)}
 				</div>
 			)}
 		</div>

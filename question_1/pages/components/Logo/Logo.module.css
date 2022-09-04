@@ -1,0 +1,21 @@
+.logo {
+    width: 20rem;
+    position: fixed;
+    right: 3rem;
+    top: 3rem;
+}
+
+@media (max-width: 1300px) {
+    .logo{
+        width: 10rem;
+        right: 2rem;
+        top: 2rem;
+    }
+}
+
+@media (max-width: 560px) {
+    .logo{
+        top: 1rem;
+    }
+}
+

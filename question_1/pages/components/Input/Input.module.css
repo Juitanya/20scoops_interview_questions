@@ -1,3 +1,17 @@
+.container {
+    display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.contentContainer {
+    display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 1rem;
+	position: relative;
+}
 .input {
     min-height: 1.75rem;
     font-size: 1em;
@@ -28,7 +42,7 @@
 }
 
 .error {
-    color: red;
+    color: rgb(214, 46, 46); 
     margin-top: 0.25rem;
 }
 
@@ -41,4 +55,12 @@
     padding: 0.5rem ;
     font-family: Poppins;
     margin-right: 3rem;
+}
+
+.imgPassword {
+    width: 2rem;
+	cursor: pointer;
+	position: absolute;
+	right: 10px;
+	opacity: 0.5;
 }

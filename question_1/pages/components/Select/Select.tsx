@@ -28,8 +28,13 @@ const Select: FC<SelectProps> = ({
 			name={name}
 			required={required}
 		>
-			{option.map(({ value, disabled, hidden }) => (
-				<Option value={value} disabled={disabled} hidden={hidden} />
+			{option.map(({ value, disabled, hidden }, i) => (
+				<Option
+					value={value}
+					disabled={disabled}
+					hidden={hidden}
+					key={i}
+				/>
 			))}
 		</select>
 	);
