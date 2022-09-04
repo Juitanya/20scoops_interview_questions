@@ -29,12 +29,22 @@ const Home: NextPage = () => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState("");
 	const { authUser, authLoading, signIn, signOut } = useAuth();
-	const [userData, setUserData] = useState({} as UserInformation);
+	const [userData, setUserData] = useState({
+		gender: "",
+		firstName: "",
+		lastName: "",
+		address: "",
+		postCode: "",
+		email: "",
+		tel: "",
+	} as UserInformation);
 
 	useEffect(() => {
 		const fetchUserData = async () => {
 			setLoading(true);
+			console.log("authUser", authUser);
 			const data = await fetchData((authUser as any).email);
+			console.log("data", data);
 			setUserData(data[0]);
 			setLoading(false);
 		};
@@ -70,8 +80,10 @@ const Home: NextPage = () => {
 		setError("");
 		setLoading(false);
 	};
+	console.log("userData", userData);
 	const { gender, firstName, lastName, address, postCode, email, tel }: any =
 		userData;
+
 	return (
 		<div className={styles.container}>
 			{authLoading ? (

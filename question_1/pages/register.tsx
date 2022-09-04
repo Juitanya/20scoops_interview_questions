@@ -58,7 +58,7 @@ const Register: NextPage = () => {
 				lastName,
 				address,
 				postCode,
-				email,
+				email: email.toLowerCase(),
 				tel,
 			};
 
