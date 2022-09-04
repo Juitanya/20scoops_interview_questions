@@ -23,7 +23,14 @@ const Input: FC<InputProps> = ({
 	const [error, setError] = useState("");
 
 	return (
-		<div>
+		<div
+			style={{
+				display: "flex",
+				flexDirection: "column",
+				justifyContent: "center",
+				alignItems: "center",
+			}}
+		>
 			<div
 				style={{
 					display: "flex",
@@ -61,6 +68,8 @@ const Input: FC<InputProps> = ({
 							? styles.passwordInput
 							: type === "checkbox"
 							? styles.checkboxInput
+							: name === "tel"
+							? styles.telInput
 							: styles.input
 					}
 					onChange={(e) => {
@@ -124,7 +133,7 @@ const Input: FC<InputProps> = ({
 					""
 				)}
 			</div>
-			{error ? <div style={{ color: "red" }}>{error}</div> : ""}
+			{error ? <div className={styles.error}>{error}</div> : ""}
 		</div>
 	);
 };

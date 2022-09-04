@@ -9,6 +9,7 @@ import { REGEX } from "./constant";
 import { useAuth } from "./context/useAuth";
 import { writeData } from "./firebase/database";
 import { validateByRegex } from "./utils";
+import styles from "../styles/Register.module.css";
 
 interface RegisterDataType {
 	gender: { value: string };
@@ -76,109 +77,81 @@ const Register: NextPage = () => {
 		setLoading(false);
 	};
 	return (
-		<div>
-			<form
-				autoComplete="off"
-				onSubmit={(e) => handleRegister(e)}
-				id="registerform"
-				style={{
-					display: "flex",
-					flexDirection: "column",
-					justifyContent: "center",
-					alignItems: "center",
-					gap: "0.5rem",
-				}}
-			>
-				<Label text="Gender: " required />
-				<select name="gender" id="gender" required defaultValue="">
-					<option disabled value="" hidden></option>
-					<option value="Male">Male</option>
-					<option value="Female">Female</option>
-					<option value="Other">Other</option>
-				</select>
-				<Label text="First name: " required />
-				<Input
-					type="text"
-					name="firstName"
-					placeholder="Enter your firstname"
-					required
-				/>
-
-				<Label text="Last name: " required />
-				<Input
-					type="text"
-					name="lastName"
-					placeholder="Enter your lastname"
-					required
-				/>
-				<Label text="Address: " required />
-				<Input
-					type="text"
-					name="address"
-					placeholder="Enter your address"
-					required
-				/>
-				<Label text="Postcode: " required />
-				<Input
-					type="text"
-					name="postCode"
-					placeholder="Enter your postcode"
-					required
-				/>
-				<Label text="Email: " required />
-				<Input
-					type="text"
-					name="email"
-					placeholder="Enter your email"
-					required
-				/>
-				<Label text="Telephone Number: " required />
-				<Input
-					type="text"
-					name="tel"
-					placeholder="Enter your telephone number"
-					required
-					max={10}
-				/>
-
-				<div
-					style={{
-						display: "flex",
-						justifyContent: "center",
-						alignItems: "center",
-					}}
+		<div className={styles.container}>
+			<div className={styles.contentContainer}>
+				<form
+					autoComplete="off"
+					onSubmit={(e) => handleRegister(e)}
+					id="registerform"
+					className={styles.formContainer}
 				>
-					<Input required type="checkbox" name="acceptedTerms" />
-					<p style={{ paddingLeft: "1rem" }}>
-						I have read and agree to the website terms and
-						conditions
-					</p>
+					<Label text="Gender: " required />
+					<select name="gender" id="gender" required defaultValue="">
+						<option disabled value="" hidden></option>
+						<option value="Male">Male</option>
+						<option value="Female">Female</option>
+						<option value="Other">Other</option>
+					</select>
+					<Label text="First name: " required />
+					<Input
+						type="text"
+						name="firstName"
+						placeholder="Enter your firstname"
+						required
+					/>
+
+					<Label text="Last name: " required />
+					<Input
+						type="text"
+						name="lastName"
+						placeholder="Enter your lastname"
+						required
+					/>
+					<Label text="Address: " required />
+					<Input
+						type="text"
+						name="address"
+						placeholder="Enter your address"
+						required
+					/>
+					<Label text="Postcode: " required />
+					<Input
+						type="text"
+						name="postCode"
+						placeholder="Enter your postcode"
+						required
+					/>
+					<Label text="Email: " required />
+					<Input
+						type="text"
+						name="email"
+						placeholder="Enter your email"
+						required
+					/>
+					<Label text="Telephone Number: " required />
+					<Input
+						type="text"
+						name="tel"
+						placeholder="Enter your telephone number"
+						required
+						max={10}
+					/>
+
+					<div className={styles.checkBoxContainer}>
+						<Input required type="checkbox" name="acceptedTerms" />
+						<p style={{ paddingLeft: "1rem" }}>
+							I have read and agree to the website terms and
+							conditions
+						</p>
+					</div>
+					<Button type="submit" text="Register" loading={loading} />
+				</form>
+				{error ? <div className={styles.error}>{error}</div> : ""}
+				<div className={styles.goToSignInPage}>
+					<Link href="/">
+						Already have account ? Go to sign in page.
+					</Link>
 				</div>
-				<Button type="submit" text="Register" loading={loading} />
-			</form>
-			{error ? (
-				<div
-					style={{
-						color: "red",
-						display: "flex",
-						justifyContent: "center",
-						marginTop: "1rem",
-					}}
-				>
-					{error}
-				</div>
-			) : (
-				""
-			)}
-			<div
-				style={{
-					display: "flex",
-					justifyContent: "center",
-					marginTop: "1rem",
-					color: "#3498db",
-				}}
-			>
-				<Link href="/">Already have account ? Go to sign in page.</Link>
 			</div>
 		</div>
 	);

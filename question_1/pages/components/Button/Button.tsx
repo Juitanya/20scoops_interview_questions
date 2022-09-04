@@ -7,9 +7,11 @@ interface ButtonProps {
 	onClick?: React.MouseEventHandler<HTMLButtonElement>;
 	type?: "button" | "submit" | "reset";
 	text?: string;
+	littleMarginTop?: boolean;
 }
 const Button: FC<ButtonProps> = ({
 	loading,
+	littleMarginTop,
 	onClick,
 	text,
 	type,
@@ -20,6 +22,7 @@ const Button: FC<ButtonProps> = ({
 			type={type}
 			onClick={onClick}
 			disabled={loading}
+			style={{ marginTop: littleMarginTop ? "0.25rem" : "" }}
 		>
 			{loading ? <Loader /> : text}
 		</button>

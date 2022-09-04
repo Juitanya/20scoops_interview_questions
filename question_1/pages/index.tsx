@@ -7,6 +7,8 @@ import { REGEX } from "./constant";
 import { useAuth } from "./context/useAuth";
 import { fetchData } from "./firebase/database";
 import { validateByRegex } from "./utils";
+import styles from "../styles/Home.module.css";
+import Information from "./components/Information/Information";
 
 interface FormData {
 	email: { value: string };
@@ -27,7 +29,7 @@ const Home: NextPage = () => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState("");
 	const { authUser, authLoading, signIn, signOut } = useAuth();
-	const [userData, setUserData] = useState({});
+	const [userData, setUserData] = useState({} as UserInformation);
 
 	useEffect(() => {
 		const fetchUserData = async () => {
@@ -70,75 +72,76 @@ const Home: NextPage = () => {
 	};
 	const { gender, firstName, lastName, address, postCode, email, tel }: any =
 		userData;
-	return authLoading ? (
-		<div></div>
-	) : !authUser ? (
-		<div
-			style={{
-				display: "flex",
-				flexDirection: "column",
-				justifyContent: "center",
-				alignItems: "center",
-				gap: "0.5rem",
-			}}
-		>
-			<form
-				autoComplete="off"
-				onSubmit={(e) => handleSignIn(e)}
-				id="loginform"
-				style={{
-					display: "flex",
-					flexDirection: "column",
-					justifyContent: "center",
-					alignItems: "center",
-					gap: "0.5rem",
-				}}
-			>
-				<label>Email:</label>
-				<Input
-					type="text"
-					name="email"
-					required
-					placeholder="Enter your email address"
-				/>
-				<label>Password:</label>
-				<Input
-					type="password"
-					name="password"
-					required
-					placeholder="Enter your password"
-				/>
-				<Button type="submit" text="Login" loading={loading} />
-			</form>
+	return (
+		<div className={styles.container}>
+			{authLoading ? (
+				<div></div>
+			) : !authUser ? (
+				<div className={styles.contentContainer}>
+					<form
+						autoComplete="off"
+						onSubmit={(e) => handleSignIn(e)}
+						id="loginform"
+						style={{
+							display: "flex",
+							flexDirection: "column",
+							justifyContent: "center",
+							alignItems: "center",
+							gap: "0.5rem",
+						}}
+					>
+						<label>Email:</label>
+						<Input
+							type="text"
+							name="email"
+							required
+							placeholder="Enter your email address"
+						/>
+						<label>Password:</label>
+						<Input
+							type="password"
+							name="password"
+							required
+							placeholder="Enter your password"
+						/>
+						<Button
+							type="submit"
+							text="Login"
+							loading={loading}
+							littleMarginTop
+						/>
+					</form>
 
-			<Link href="/register">
-				<Button text="Register" />
-			</Link>
-			{error ? <div style={{ color: "red" }}>{error}</div> : ""}
-		</div>
-	) : (
-		<div>
-			{loading ? (
-				""
+					<Link href="/register">
+						<Button text="Register" />
+					</Link>
+					{error ? <div style={{ color: "red" }}>{error}</div> : ""}
+				</div>
 			) : (
-				<React.Fragment>
-					<p>Gender : {gender}</p>
-					<p>First Name : {firstName} </p>
-					<p>Last Name : {lastName}</p>
-					<p>Address : {address}</p>
-					<p>Post Code : {postCode}</p>
-					<p>Email : {email}</p>
-					<p>Telephone Number : {tel}</p>
-				</React.Fragment>
+				<div className={styles.informationContainer}>
+					{loading ? (
+						""
+					) : (
+						<React.Fragment>
+							<Information topic="Gender" info={gender} />
+							<Information topic="First Name" info={firstName} />
+							<Information topic="Last Name" info={lastName} />
+							<Information topic="Address" info={address} />
+							<Information topic="Post Code" info={postCode} />
+							<Information topic="Email" info={email} />
+							<Information topic="Telephone Number" info={tel} />
+						</React.Fragment>
+					)}
+
+					<Button
+						onClick={() => handleSignOut()}
+						text="LOGOUT"
+						loading={loading}
+					/>
+
+					{error ? <div style={{ color: "red" }}>{error}</div> : ""}
+				</div>
 			)}
-
-			<Button
-				onClick={() => handleSignOut()}
-				text="LOGOUT"
-				loading={loading}
-			/>
-
-			{error ? <div style={{ color: "red" }}>{error}</div> : ""}
 		</div>
 	);
 };

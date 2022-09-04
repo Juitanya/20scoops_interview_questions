@@ -24,14 +24,31 @@
     padding: 2rem;
     border-radius: 1rem;
 }
-.informationContainer {
-    background-color : white;
+
+.formContainer {
     display: flex;
 	flex-direction: column;
 	justify-content: center;
+	align-items: center;
 	gap: 0.5rem;
-    max-width:100%;
-    overflow: hidden;
-    padding: 2rem;
-    border-radius: 1rem;
+}
+
+.checkBoxContainer {
+    display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.error {
+    color: red;
+	display: flex;
+	justify-content: center;
+	margin-top: 1rem;
+}
+
+.goToSignInPage {
+    display: flex;
+	justify-content: center;
+	margin-top: 1rem;
+	color: #3498db;
 }
